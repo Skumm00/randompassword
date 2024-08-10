@@ -12,13 +12,13 @@ def create_user(username, password):
 
     # Keep the new user's information
     users[username] = password
-    print("User created successfully!")
+    print("User created!")
     return True
 
 def login(username, password):
     #Logins in with given username and password
     
-    # Check if the username exists
+    # Check if the username doesnt exists
     if username not in users:
         print("Username not found.")
         return False
@@ -32,7 +32,7 @@ def login(username, password):
 
     # Display custom message based on username
     if username == "admin":
-        print("Welcome, Administrator!")
+        print("Welcome, Admin!")
     elif username == "guest":
         print("Welcome, Level 1 User!")
     else:
@@ -66,6 +66,7 @@ def login(username, password):
                 print("Password not here.")
         else:
             print("Account not here.")
+            
     # Add a feature to allow users to change their password
     if username in users:
         change_password = input("Do you want to change your password? (yes/no): ")
@@ -77,25 +78,49 @@ def login(username, password):
                 print("Password changed!")
             else:
                 print("Passwords do not match.")
+    
+    # Add custom info for admin
+    if username == "admin":
+        print("\nAdmin Dashboard:")
+        print("--------------------")
+        # Example chart (replace with actual data or code)
+        print("Users: 5")
+        print("Active Users: 3")
+        print("Pending Requests: 2")
+        print("--------------------")
+    elif username == "guest":
+        print("\nGuest Access:")
+        print("Exclusive information available.")
+    
+    # Chance to show the normal screen after login
+    chance = random.randint(1, 10)
+    if chance == 5:
+        print("You got lucky! Returning to main menu...")
+        main()
+        return True
+    
     return True
 
 def generate_password(length=12):
-    # Generate a random password
+    # Generate a random password using a custom character set and digits
     genrandom = ['a', 'b', 'd', 'c', 'e', 'f', 'g', 'd', 't', 'r', 'k', 'l', 'm', 'n', 'o',
                 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'G', 'C', 'D','E', 
                  'F', 'G', 'H', 'I', 'J', 'V', 'L', 'S', 'N', 'T', 'F', 'Q', 'R', 'S', 'k',                     'X', 'A', 'H','X', 'H', 'Z', 'J','BA',"TA",'RA','FA','TAC','Sa','Ja','La'
                 'Fa','Me','So',"kS",'Fs','Ra','Cha','tA','Be','Eb','Sd'
                 ]
-    password = ''.join(random.sample(genrandom, 6))
+    password = ''.join(random.sample(genrandom, 6))  # Start with 6 random characters from genrandom
+    
+    # Add digits to the password for the remaining length
     for i in range(length - 6):
-        password += random.choice(string.digits)
-    return password
+        password += random.choice(string.digits)  # Append a random digit to the password
+
+    return password  # Return the generated password
 
 def main():
     
     #the main function we need for this password project
     global users
-    users = {}
+    users = {}  # Initialize the users dictionary
 
     while True:
         print("\nChoose an option:")
@@ -118,10 +143,14 @@ def main():
             password = generate_password()
             print("Generated Password:", password)
         elif choice == '4':
-            print("Exiting...")
-            break
+            print("Exiting")
+            
+            #break
+        #elif choice == '5':
+            #print("Guest Acess")
         else:
             print("Error!")
+    
 
 if __name__ == "__main__":
     main()
